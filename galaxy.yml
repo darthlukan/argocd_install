@@ -44,10 +44,10 @@ dependencies: {}
 repository: https://github.com/darthlukan/argocd_install
 
 # The URL to any online docs
-documentation: http://docs.example.com
+documentation: https://github.com/darthlukan/argocd_install/blob/master/README.md
 
 # The URL to the homepage of the collection/project
-homepage: http://example.com
+homepage: https://github.com/darthlukan/argocd_install
 
 # The URL to the collection issue tracker
-issues: http://example.com/issue/tracker
+issues: https://github.com/darthlukan/argocd_install/issues
