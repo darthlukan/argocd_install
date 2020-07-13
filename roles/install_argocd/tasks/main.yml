@@ -1,2 +1,26 @@
 ---
-# tasks file for install_argocd
+# This should only execute if the role is ever run separately from
+# install_prereqs
+- name: Get latest ArgoCD CLI release
+  github_release:
+    user: argoproj
+    repo: argo-cd
+    action: latest_release
+  register: argocd_release
+  when: argocd_release is undefined
+
+- name: Namespace argocd is present
+  k8s:
+    name: argocd
+    kind: Namespace
+    api_version: v1
+    state: present
+    kubeconfig: "{{ kubeconfig }}"
+
+- name: Install argocd
+  k8s:
+    namespace: argocd
+    src: "https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_release.tag }}/manifests/ha/install.yaml"
+    state: present
+    kubeconfig: "{{ kubeconfig }}"
+...
