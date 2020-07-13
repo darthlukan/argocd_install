@@ -6,9 +6,15 @@
     action: latest_release
   register: k8s_release
 
-- name: Install kubectl binary
+- name: Get kubectl binary
   unarchive:
     src: "https://dl.k8s.io/{{ k8s_release.tag }}/kubernetes-client-linux-amd64.tar.gz"
-    dest: "{{ bin_dir }}"
+    dest: /tmp
+    remote_src: yes
+
+- name: Install kubectl binary
+  copy:
+    src: /tmp/kubernetes/client/bin/kubectl
+    dest: "{{ bin_dir }}/kubectl"
     mode: "+x"
 ...
