@@ -1,13 +1,14 @@
 ---
-- name: Get latest ArgoCD CLI version
-  debug:
-    msg: "Get latest version"
+- name: Get latest ArgoCD CLI release
+  github_release:
+    user: argoproj
+    repo: argo-cd
+    action: latest_release
+  register: argocd_release
 
 - name: Get ArgoCD CLI binary
-  debug:
-    msg: "Get argocd binary"
-
-- name: Make argocd binary executable
-  debug:
-    msg: "Make argocd binary executable"
+  get_url:
+    url: "https://github.com/argoproj/argo-cd/releases/download/{{ argocd_release.tag }}/argocd-linux-amd64"
+    dest: "{{ bin_dir }}/argocd"
+    mode: "+x"
 ...
