@@ -6,7 +6,7 @@
     action: latest_release
   register: argocd_release
 
-- name: Get ArgoCD CLI binary
+- name: Install ArgoCD CLI binary
   get_url:
     url: "https://github.com/argoproj/argo-cd/releases/download/{{ argocd_release.tag }}/argocd-linux-amd64"
     dest: "{{ bin_dir }}/argocd"
