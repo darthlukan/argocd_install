@@ -1,0 +1,13 @@
+---
+- name: Get latest oc binary
+  unarchive:
+    src: "https://mirror.openshift.com/pub/openshift-v{{ ocp_major_version }}/clients/ocp/latest/openshift-client-linux.tar.gz"
+    dest: "{{ bin_dir }}"
+    remote_src: yes
+
+- name: Install oc binary
+  file:
+    path: "{{ bin_dir }}/oc"
+    state: file
+    mode: "+x"
+...
