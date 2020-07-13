@@ -1,3 +1,4 @@
 ---
 bin_dir: "/home/{{ ansible_user_id }}/bin"
+ocp_major_version: 4
 ...
