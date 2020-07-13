@@ -1,0 +1,13 @@
+---
+- name: Get latest ArgoCD CLI version
+  debug:
+    msg: "Get latest version"
+
+- name: Get ArgoCD CLI binary
+  debug:
+    msg: "Get argocd binary"
+
+- name: Make argocd binary executable
+  debug:
+    msg: "Make argocd binary executable"
+...
