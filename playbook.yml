@@ -1,6 +1,13 @@
 ---
-- hosts: all
+- name: Install Prerequisites
+  hosts: all
   tasks:
     - import_role:
         name: install_prereqs
+
+- name: Install ArgoCD
+  hosts: local
+  tasks:
+    - import_role:
+        name: install_argocd
 ...
