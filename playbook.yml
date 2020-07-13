@@ -1,6 +1,6 @@
 ---
 - name: Install Prerequisites
-  hosts: all
+  hosts: local
   tasks:
     - import_role:
         name: install_prereqs
