@@ -7,7 +7,11 @@
     repo: argo-cd
     action: latest_release
   register: argocd_release
-  when: argocd_release is undefined
+
+- name: Download install manifest
+  get_url:
+    url: "https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_release.tag }}/manifests/ha/install.yaml"
+    dest: "{{ role_path }}/files/install.yaml"
 
 - name: Namespace argocd is present
   k8s:
@@ -20,7 +24,7 @@
 - name: Install argocd
   k8s:
     namespace: argocd
-    src: "https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_release.tag }}/manifests/ha/install.yaml"
+    src: "{{ role_path }}/files/install.yaml"
     state: present
     kubeconfig: "{{ kubeconfig }}"
 ...
