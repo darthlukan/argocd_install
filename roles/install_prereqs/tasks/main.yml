@@ -1,2 +1,5 @@
 ---
-# tasks file for install_prereqs
+- import_tasks: argocd_cli.yml
+# - import_tasks: kubectl_cli.yml
+# - import_tasks: ocp_cli.yml
+...
