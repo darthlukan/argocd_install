@@ -1,2 +1,3 @@
 ---
-# defaults file for install_prereqs
+bin_dir: "/home/{{ ansible_user_id }}/bin"
+...
