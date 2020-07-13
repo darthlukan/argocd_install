@@ -1,0 +1,14 @@
+---
+- name: Get latest kubectl CLI release
+  github_release:
+    user: kubernetes
+    repo: kubernetes
+    action: latest_release
+  register: k8s_release
+
+- name: Install kubectl binary
+  unarchive:
+    src: "https://dl.k8s.io/{{ k8s_release.tag }}/kubernetes-client-linux-amd64.tar.gz"
+    dest: "{{ bin_dir }}"
+    mode: "+x"
+...
