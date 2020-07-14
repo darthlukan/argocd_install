@@ -1,6 +1,4 @@
 ---
-# This should only execute if the role is ever run separately from
-# install_prereqs
 - name: Get latest ArgoCD CLI release
   github_release:
     user: argoproj
@@ -10,7 +8,7 @@
 
 - name: Download install manifest
   get_url:
-    url: "https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_release.tag }}/manifests/ha/install.yaml"
+    url: "https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_release.tag }}/manifests/install.yaml"
     dest: "{{ role_path }}/files/install.yaml"
 
 - name: Namespace argocd is present
@@ -27,4 +25,6 @@
     src: "{{ role_path }}/files/install.yaml"
     state: present
     kubeconfig: "{{ kubeconfig }}"
+
+- name: Expose server service
 ...
