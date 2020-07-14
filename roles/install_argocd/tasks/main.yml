@@ -1,15 +1,16 @@
 ---
 - name: Get latest ArgoCD CLI release
   github_release:
-    user: argoproj
-    repo: argo-cd
+    user: argoproj-labs
+    repo: argocd-operator
     action: latest_release
-  register: argocd_release
+  register: operator_release
 
-- name: Download install manifest
-  get_url:
-    url: "https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_release.tag }}/manifests/install.yaml"
-    dest: "{{ role_path }}/files/install.yaml"
+- name: Get ArgoCD Operator code
+  git:
+    repo: https://github.com/argoproj-labs/argocd-operator.git
+    dest: "{{ role_path }}/files"
+    version: "{{ operator_release.tag }}"
 
 - name: Namespace argocd is present
   k8s:
@@ -19,12 +20,17 @@
     state: present
     kubeconfig: "{{ kubeconfig }}"
 
-- name: Install argocd
+- name: Install ArgoCD Operator
   k8s:
     namespace: argocd
-    src: "{{ role_path }}/files/install.yaml"
+    src: "{{ role_path }}/files/deploy/{{ item }}"
     state: present
     kubeconfig: "{{ kubeconfig }}"
-
-- name: Expose server service
+  loop:
+    - service_account.yaml
+    - role.yaml
+    - role_binding.yaml
+    - argo-cd/
+    - crds/
+    - operator.yaml
 ...
