@@ -16,7 +16,12 @@ description: Install ArgoCD on Kubernetes / OpenShift 4.x
 license:
 - Apache-2.0
 
-tags: ['argocd', 'k8s', 'kubernetes', 'openshift', 'ocp']
+tags:
+  - 'argocd'
+  - 'k8s'
+  - 'kubernetes'
+  - 'openshift'
+  - 'ocp'
 
 dependencies: {}
 
