@@ -40,11 +40,4 @@
   file:
     path: "{{ role_path }}/files/argocd-operator"
     state: absent
-
-- name: Instantiate ArgoCD Cluster
-  k8s:
-    namespace: argocd
-    src: "{{ role_path }}/templates/workshop-argo-cluster-cr.yaml"
-    state: "{{ state }}"
-    kubeconfig: "{{ kubeconfig }}"
 ...
