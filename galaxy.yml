@@ -4,7 +4,7 @@ namespace: darthlukan
 
 name: argocd_install
 
-version: 1.0.0
+version: 1.1.0
 
 readme: README.md
 
