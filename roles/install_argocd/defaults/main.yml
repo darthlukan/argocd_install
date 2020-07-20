@@ -1,4 +1,6 @@
 ---
+# scope is namespace or cluster
+scope: namespace
 state: present
 # Replace with the path to your kubeconfig
 kubeconfig: "/home/{{ ansible_user_id }}/.minishift/machines/minishift_kubeconfig"
