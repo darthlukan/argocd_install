@@ -12,9 +12,9 @@
     dest: "{{ role_path }}/files/argocd-operator"
     version: "{{ operator_release.tag }}"
 
-- name: Namespace argocd is {{ state }}
+- name: Namespace {{ namespace }} is {{ state }}
   k8s:
-    name: argocd
+    name: "{{ namespace }}" 
     kind: Namespace
     api_version: v1
     state: "{{ state }}"
