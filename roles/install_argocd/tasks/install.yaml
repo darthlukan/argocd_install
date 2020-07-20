@@ -1,0 +1,26 @@
+---
+- name: "{{ 'Install' if state == present else 'Remove' }} CRDs"
+  k8s:
+    namespace: argocd
+    src: "{{ role_path }}/files/argocd-operator/deploy/{{ item }}"
+    state: "{{ state }}"
+    kubeconfig: "{{ kubeconfig }}"
+  loop:
+    - argo-cd/argoproj.io_applications_crd.yaml
+    - argo-cd/argoproj.io_appprojects_crd.yaml
+    - crds/argoproj.io_argocdexports_crd.yaml
+    - crds/argoproj.io_argocds_crd.yaml   
+
+- name: "{{ 'Install' if state == present else 'Remove' }} {{ scope }} scoped ArgoCD operator"
+  k8s:
+    namespace: argocd
+    src: "{{ role_path }}/files/argocd-operator/deploy/{{ item }}"
+    state: "{{ state }}" 
+    kubeconfig: "{{ kubeconfig }}"
+  loop:
+    - service_account.yaml
+    - role.yaml
+    - role_binding.yaml
+    - operator.yaml
+  when: state == present  # if state == absent the namespace will be removed in the setup.yaml and this would error.
+...
