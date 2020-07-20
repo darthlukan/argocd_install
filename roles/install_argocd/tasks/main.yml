@@ -1,6 +1,8 @@
 ---
 - import_tasks: setup.yaml
 
+- import_tasks: configure.yaml
+
 - import_tasks: install.yaml
 
 - import_tasks: cleanup.yaml

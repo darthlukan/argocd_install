@@ -1,0 +1,4 @@
+---
+- name: Get image from default ArgoCD operator.yaml
+- name: Populate cluster-operator.yaml with image
+...
