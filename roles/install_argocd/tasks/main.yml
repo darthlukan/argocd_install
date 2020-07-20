@@ -1,43 +1,7 @@
 ---
-- name: Get latest ArgoCD CLI release
-  github_release:
-    user: argoproj-labs
-    repo: argocd-operator
-    action: latest_release
-  register: operator_release
+- import_tasks: setup.yaml
 
-- name: Get ArgoCD Operator code
-  git:
-    repo: https://github.com/argoproj-labs/argocd-operator.git
-    dest: "{{ role_path }}/files/argocd-operator"
-    version: "{{ operator_release.tag }}"
+- import_tasks: install.yaml
 
-- name: Namespace argocd is present
-  k8s:
-    name: argocd
-    kind: Namespace
-    api_version: v1
-    state: "{{ state }}"
-    kubeconfig: "{{ kubeconfig }}"
-
-- name: Install ArgoCD Operator
-  k8s:
-    namespace: argocd
-    src: "{{ role_path }}/files/argocd-operator/deploy/{{ item }}"
-    state: "{{ state }}" 
-    kubeconfig: "{{ kubeconfig }}"
-  loop:
-    - service_account.yaml
-    - role.yaml
-    - role_binding.yaml
-    - argo-cd/argoproj.io_applications_crd.yaml
-    - argo-cd/argoproj.io_appprojects_crd.yaml
-    - crds/argoproj.io_argocdexports_crd.yaml
-    - crds/argoproj.io_argocds_crd.yaml
-    - operator.yaml
-
-- name: Clean-up files dir
-  file:
-    path: "{{ role_path }}/files/argocd-operator"
-    state: absent
+- import_tasks: cleanup.yaml
 ...
