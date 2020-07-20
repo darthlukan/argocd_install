@@ -1,7 +1,7 @@
 ---
 - name: "{{ 'Install' if state == present else 'Remove' }} CRDs"
   k8s:
-    namespace: argocd
+    namespace: "{{ namespace }}" 
     src: "{{ role_path }}/files/argocd-operator/deploy/{{ item }}"
     state: "{{ state }}"
     kubeconfig: "{{ kubeconfig }}"
@@ -13,7 +13,7 @@
 
 - name: "{{ 'Install' if state == present else 'Remove' }} {{ scope }} scoped ArgoCD operator"
   k8s:
-    namespace: argocd
+    namespace: "{{ namespace }}" 
     src: "{{ role_path }}/files/argocd-operator/deploy/{{ item }}"
     state: "{{ state }}" 
     kubeconfig: "{{ kubeconfig }}"
