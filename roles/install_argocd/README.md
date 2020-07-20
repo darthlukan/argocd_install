@@ -5,10 +5,13 @@ Install the ArgoCD Operator (non-OLM).
 
 Role Variables
 --------------
+`scope` defaults to namespace. Valid values are namespace or cluster.
 
-`state` defaults to `present`.
+`state` defaults to `present`. Valid values are present or absent.
 
 `kubeconfig` defaults to `$HOME/.minishift/machines/minishift_kubeconfig`
+
+`namespace` defaults to argocd.
 
 
 Example Playbook
