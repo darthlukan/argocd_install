@@ -24,4 +24,26 @@
     - operator.yaml
   # if state == absent the namespace will be removed in the setup.yaml and this would error.
   when: state == present 
+
+- name: "{{ 'Create' if state == present else 'Remove' }} cluster-admin Rolebinding"
+  k8s:
+    state: "{{ state }}"
+    definition:
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        labels:
+          app.kubernetes.io/component: application-controller
+          app.kubernetes.io/name: argocd-application-controller
+          app.kubernetes.io/part-of: argocd
+        name: argocd-application-controller
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: cluster-admin
+      subjects:
+      - kind: ServiceAccount
+        name: argocd-application-controller
+        namespace: argocd
+  when: scope == cluster
 ...
