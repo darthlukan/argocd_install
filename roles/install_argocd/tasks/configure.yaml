@@ -1,7 +1,7 @@
 ---
 - name: Get default ArgoCD operator.yaml
   set_fact:
-    operator_yaml: "{{ lookup('file', {{ role_path }}/files/argocd-operator/deploy/operator.yaml) }}"
+    operator_yaml: "{{ lookup('file', \"{{ role_path }}/files/argocd-operator/deploy/operator.yaml\") }}"
   when: scope == 'cluster'
 
 - name: Get image from default ArgoCD operator.yaml
