@@ -1,12 +1,12 @@
 ---
 - name: Get default ArgoCD operator.yaml
   set_fact:
-    operator_yaml: "{{ lookup('file', \"{{ role_path }}/files/argocd-operator/deploy/operator.yaml\") }}"
+    operator_json: "{{ lookup('file', \"{{ role_path }}/files/argocd-operator/deploy/operator.yaml\") | from_yaml }}"
   when: scope == 'cluster'
 
-- name: Get image from default ArgoCD operator.yaml
+- name: Set operator_image
   set_fact:
-    operator_image: "{{ operator_yaml | regex_findall('(quay.*[0-9a-zA-Z])$') }}"
+    operator_image: "{{ operator_json.spec.template.spec.containers[0].image }}"
   when: scope == 'cluster'
 
 - name: Populate cluster-operator.yaml
