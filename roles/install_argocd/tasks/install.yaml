@@ -23,7 +23,7 @@
     - role_binding.yaml
     - operator.yaml
   # if state == absent the namespace will be removed in the setup.yaml and this would error.
-  when: state == present 
+  when: state == 'present'
 
 - name: "{{ 'Create' if state == present else 'Remove' }} cluster-admin Rolebinding for argocd-application-controller service account"
   k8s:
@@ -45,5 +45,5 @@
       - kind: ServiceAccount
         name: argocd-application-controller
         namespace: "{{ namespace }}" 
-  when: scope == cluster
+  when: scope == 'cluster'
 ...
