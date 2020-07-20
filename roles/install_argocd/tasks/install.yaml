@@ -25,7 +25,7 @@
   # if state == absent the namespace will be removed in the setup.yaml and this would error.
   when: state == present 
 
-- name: "{{ 'Create' if state == present else 'Remove' }} cluster-admin Rolebinding"
+- name: "{{ 'Create' if state == present else 'Remove' }} cluster-admin Rolebinding for argocd-application-controller service account"
   k8s:
     state: "{{ state }}"
     definition:
