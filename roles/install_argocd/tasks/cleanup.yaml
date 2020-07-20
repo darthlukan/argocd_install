@@ -1,0 +1,6 @@
+---
+- name: Clean-up files dir
+  file:
+    path: "{{ role_path }}/files/argocd-operator"
+    state: absent
+...
