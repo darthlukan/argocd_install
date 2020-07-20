@@ -2,9 +2,13 @@
 # scope is namespace or cluster
 scope: namespace
 
-  # state is present or absent
+# state is present or absent
 state: present
 
 # Replace with the path to your kubeconfig
 kubeconfig: "/home/{{ ansible_user_id }}/.minishift/machines/minishift_kubeconfig"
+
+# The namespace to install the operator into.
+# Used for both namespace and cluster scoped installations.
+namespace: argocd
 ...
