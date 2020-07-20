@@ -12,7 +12,7 @@
     dest: "{{ role_path }}/files/argocd-operator"
     version: "{{ operator_release.tag }}"
 
-- name: Namespace argocd is present
+- name: Namespace argocd is {{ state }}
   k8s:
     name: argocd
     kind: Namespace
