@@ -11,19 +11,12 @@
     - crds/argoproj.io_argocdexports_crd.yaml
     - crds/argoproj.io_argocds_crd.yaml   
 
-- name: "{{ 'Install' if state == 'present' else 'Remove' }} {{ scope }} scoped ArgoCD operator"
+- name: "{{ 'Create' if state == 'present' else 'Remove' }} argocd-operator ClusterRole"
   k8s:
-    namespace: "{{ namespace }}" 
-    src: "{{ role_path }}/files/argocd-operator/deploy/{{ item }}"
-    state: "{{ state }}" 
+    state: "{{ state }}"
+    src: "{{ role_path }}/static/argocd-operator-clusterrole.yaml"
     kubeconfig: "{{ kubeconfig }}"
-  loop:
-    - service_account.yaml
-    - role.yaml
-    - role_binding.yaml
-    - operator.yaml
-  # if state == absent the namespace will be removed in the setup.yaml and this would error.
-  when: state == 'present'
+  when: scope == 'cluster'
 
 - name: "{{ 'Create' if state == 'present' else 'Remove' }} cluster-admin Rolebinding for argocd-application-controller service account"
   k8s:
@@ -46,4 +39,42 @@
         name: argocd-application-controller
         namespace: "{{ namespace }}" 
   when: scope == 'cluster'
+
+- name: "{{ 'Create' if state == 'present' else 'Remove' }} argocd-operator ClusterRolebinding"
+  k8s:
+    state: "{{ state }}"
+    definition:
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        labels:
+          app.kubernetes.io/component: argocd-operator
+          app.kubernetes.io/name: argocd-operator-clusterrolebinding
+          app.kubernetes.io/part-of: argocd
+        name: argocd-operator-admin
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: argocd-operator-admin
+      subjects:
+      - kind: ServiceAccount
+        name: argocd-operator
+        namespace: "{{ namespace }}" 
+  when: scope == 'cluster'
+
+- name: "{{ 'Install' if state == 'present' else 'Remove' }} {{ scope }} scoped ArgoCD operator"
+  k8s:
+    namespace: "{{ namespace }}" 
+    src: "{{ role_path }}/files/argocd-operator/deploy/{{ item }}"
+    state: "{{ state }}" 
+    kubeconfig: "{{ kubeconfig }}"
+  loop:
+    - service_account.yaml
+    - role.yaml
+    - role_binding.yaml
+    - operator.yaml
+  # if state == absent the namespace will be removed in the setup.yaml and this would error.
+  when: state == 'present'
+
+
 ...
