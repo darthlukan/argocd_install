@@ -7,7 +7,7 @@ state: present
 
 # Replace with the path to your kubeconfig
 # NOTE: Must be cluster-admin to install CRDs and cluster scoped operator!
-kubeconfig: "/home/{{ ansible_user_id }}/.minishift/machines/minishift_kubeconfig"
+kubeconfig: "{{ lookup('env', 'HOME') }}/.minishift/machines/minishift_kubeconfig"
 
 # The namespace to install the operator into.
 # Used for both namespace and cluster scoped installations.

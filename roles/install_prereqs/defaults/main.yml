@@ -1,4 +1,4 @@
 ---
-bin_dir: "/home/{{ ansible_user_id }}/bin"
+bin_dir: "{{ lookup('env', 'HOME') }}/bin"
 ocp_major_version: 4
 ...
