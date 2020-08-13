@@ -12,4 +12,8 @@ kubeconfig: "{{ lookup('env', 'HOME') }}/.minishift/machines/minishift_kubeconfi
 # The namespace to install the operator into.
 # Used for both namespace and cluster scoped installations.
 namespace: argocd
+
+# The internal registry used by the cluster to proxy or mirror or pull-through images.
+# Used for both namespace or cluster scoped installations.
+internal_registry: ""
 ...
