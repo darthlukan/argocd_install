@@ -1,5 +1,8 @@
 ---
 # scope is namespace or cluster
+# When setting scope to 'cluster', the role applies an elevated ClusterRoleBinding to 
+# argocd-operator service account, cluster-admin to the argocd-application-controller 
+# service account, and sets the 'WATCH_NAMESPACE' of the operator Deployment to "" (all namespaces)
 scope: namespace
 
 # state is present or absent
@@ -7,9 +10,13 @@ state: present
 
 # Replace with the path to your kubeconfig
 # NOTE: Must be cluster-admin to install CRDs and cluster scoped operator!
-kubeconfig: "/home/{{ ansible_user_id }}/.minishift/machines/minishift_kubeconfig"
+kubeconfig: "{{ lookup('env', 'HOME') }}/.minishift/machines/minishift_kubeconfig"
 
 # The namespace to install the operator into.
 # Used for both namespace and cluster scoped installations.
 namespace: argocd
+
+# The internal registry used by the cluster to proxy or mirror or pull-through images.
+# Used for both namespace or cluster scoped installations.
+internal_registry: ""
 ...
