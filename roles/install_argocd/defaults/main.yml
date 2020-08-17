@@ -1,5 +1,8 @@
 ---
 # scope is namespace or cluster
+# When setting scope to 'cluster', the role applies an elevated ClusterRoleBinding to 
+# argocd-operator service account, cluster-admin to the argocd-application-controller 
+# service account, and sets the 'WATCH_NAMESPACE' of the operator Deployment to "" (all namespaces)
 scope: namespace
 
 # state is present or absent
