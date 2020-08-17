@@ -75,6 +75,4 @@
     - operator.yaml
   # if state == absent the namespace will be removed in the setup.yaml and this would error.
   when: state == 'present'
-
-
 ...
