@@ -1,7 +1,8 @@
 ---
 vars:
   operator_release_tag: "latest"
-  
+
+tasks:
 - name: Get latest ArgoCD CLI release
   github_release:
     user: argoproj-labs
