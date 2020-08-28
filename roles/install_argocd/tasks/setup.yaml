@@ -17,7 +17,7 @@
   git:
     repo: https://github.com/argoproj-labs/argocd-operator.git
     dest: "{{ role_path }}/files/argocd-operator"
-    version: "{{ operator_version_tag }}"
+    version: "{{ operator_release_tag }}"
   when: operator_release_tag != "latest"
 
 - name: Namespace {{ namespace }} is {{ state }}
