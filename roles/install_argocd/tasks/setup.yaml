@@ -1,6 +1,6 @@
 ---
 vars:
-  operator_version_tag: "v0.0.13"
+  operator_release_tag: "latest"
 - name: Get latest ArgoCD CLI release
   github_release:
     user: argoproj-labs
@@ -8,11 +8,19 @@ vars:
     action: latest_release
   register: operator_release
 
-- name: Get ArgoCD Operator code from GitHub
+- name: Get latest ArgoCD Operator code from GitHub
+  git:
+    repo: https://github.com/argoproj-labs/argocd-operator.git
+    dest: "{{ role_path }}/files/argocd-operator"
+    version: "{{ operator_release.tag }}"
+  when: operator_version_tag == "latest"
+
+- name: Get {{ operator_version_tag }} ArgoCD Operator code from GitHub
   git:
     repo: https://github.com/argoproj-labs/argocd-operator.git
     dest: "{{ role_path }}/files/argocd-operator"
     version: "{{ operator_version_tag }}"
+  when: operator_release_tag != "latest"
 
 - name: Namespace {{ namespace }} is {{ state }}
   k8s:
