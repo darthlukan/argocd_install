@@ -7,6 +7,8 @@
 
 - name: Install ArgoCD
   hosts: local
+  vars:
+    operator_release_tag: "latest"
   tasks:
     - import_role:
         name: install_argocd

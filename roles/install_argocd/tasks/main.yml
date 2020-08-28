@@ -1,7 +1,4 @@
 ---
-vars:
-  operator_release_tag: "latest"
-
 - import_tasks: setup.yaml
 
 - import_tasks: configure.yaml
