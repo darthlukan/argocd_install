@@ -21,6 +21,7 @@
 - name: "{{ 'Create' if state == 'present' else 'Remove' }} cluster-admin Rolebinding for argocd-application-controller service account"
   k8s:
     state: "{{ state }}"
+    kubeconfig: "{{ kubeconfig }}"
     definition:
       apiVersion: rbac.authorization.k8s.io/v1
       kind: ClusterRoleBinding
@@ -37,12 +38,13 @@
       subjects:
       - kind: ServiceAccount
         name: argocd-application-controller
-        namespace: "{{ namespace }}" 
+        namespace: "{{ namespace }}"
   when: scope == 'cluster'
 
 - name: "{{ 'Create' if state == 'present' else 'Remove' }} argocd-operator ClusterRolebinding"
   k8s:
     state: "{{ state }}"
+    kubeconfig: "{{ kubeconfig }}"
     definition:
       apiVersion: rbac.authorization.k8s.io/v1
       kind: ClusterRoleBinding
